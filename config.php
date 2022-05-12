@@ -1,7 +1,7 @@
 <?php
 return array(
             "serverName" => "localhost",
-            "userName" => "xmikusf",
-            "userPassword" => "kT6gKrVf8NQkk9C",
+            "userName" => "...",
+            "userPassword" => "...",
             "databaseName" => "inventor_invention"
  );
