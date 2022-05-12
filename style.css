@@ -1,0 +1,84 @@
+body {
+    margin: 0;
+    font-family: Verdana, sans-serif;
+    background-color: #b2afaf;
+    display: flex;
+    flex-direction: column;
+}
+
+.blank_row {
+    height: 5vh;
+    background-color: #FFFFFF;
+}
+
+th {
+    text-align: center;
+    background-color: #bbe8fc;
+}
+
+#glossary_select, #language_select, #search_select, #search_button {
+    width: 25%;
+}
+
+#search_text {
+    width: 50%;
+}
+
+table {
+    text-align: center;
+    width: 20%;
+    border: 1px solid #ccc;
+}
+
+button {
+    display: inline-block;
+    width: 15%;
+}
+
+#qr {
+    width: 15%;
+}
+
+p {
+    width: 15%;
+}
+
+input {
+    display: inline-block;
+    width: 15%;
+}
+
+.siteHeader {
+    top: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: left;
+    align-items: center;
+    width: 100%;
+    background-color: #bbe8fc;
+    color: #fff;
+    overflow: hidden;
+}
+
+.logoImg {
+    padding: 10px;
+    border-radius: 50%;
+}
+
+.sectionContent {
+    display: flex;
+    flex-direction: column;
+    margin: 20px;
+    padding: 10px;
+    background-color: #fdfdfd;
+    overflow: auto;
+}
+
+#statistic {
+    display: none;
+    flex-direction: column;
+    margin: 20px;
+    padding: 10px;
+    background-color: #fdfdfd;
+    overflow: auto;
+}

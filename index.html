@@ -1,0 +1,507 @@
+<!doctype html>
+<html lang="sk">
+<head>
+    <head>
+        <meta charset="UTF-8">
+        <title>Inventors</title>
+        <link rel="stylesheet" href="style.css">
+        <style>
+            table, tr, th, td {
+                border: solid 1px black;
+                border-collapse: collapse;
+            }
+        </style>
+    </head>
+</head>
+
+<header class="siteHeader">
+    <img class="logoImg" src="pers_img.jpeg" alt="logo" width="120" height="120">
+    <h1>104537 - REST (CRUD) Inventors</h1>
+</header>
+
+<body>
+<section class="sectionContent">
+    <h2>GET (READ):</h2>
+    <div id="a">
+        <hr>
+        <h4>a. získať zoznam všetkých vynálezcov</h4>
+        <pre>
+            <b>Tvar URL:</b>
+            https://site131.webte.fei.stuba.sk/zadanie_5/inventors/index.php
+            <b>Tvar Response Body:</b>
+            [
+                {
+                    "id": 1,
+                    "name": "Ján",
+                    "surname": "Bahýľ",
+                    "birth": 1856,
+                    "birthplace": "Zvolenská Slatina",
+                    "death": 1915,
+                    "deathplace": "Bratislava",
+                    "description": "vynálezca vrtuľníka"
+                },
+                {
+                    "id": 2,
+                    "name": "Aurel",
+                    "surname": "Stodola",
+                    "birth": 1859,
+                    "birthplace": "Liptovský Mikuláš",
+                    "death": 1942,
+                    "deathplace": "Zurich",
+                    "description": "konštruktér prvého tepelného čerpadla na svete"
+                }, ...
+            ]
+        </pre>
+        <button id="a_btn">GET</button>
+        <pre id="a_response"></pre>
+    </div>
+    <div id="b">
+        <hr>
+        <h4>b. získať všetky údaje o konkrétnom vynálezcovi spolu so zoznamom vynálezov</h4>
+        <pre>
+            <b>Tvar URL:</b>
+            https://site131.webte.fei.stuba.sk/zadanie_5/inventors/index.php?id=1
+            <b>Tvar Response Body:</b>
+            {
+                "id": 1,
+                "name": "Ján",
+                "surname": "Bahýľ",
+                "birth": 1856,
+                "birthplace": "Zvolenská Slatina",
+                "death": 1915,
+                "deathplace": "Bratislava",
+                "description": "vynálezca vrtuľníka",
+                "inventions": [
+                    {
+                        "id": 1,
+                        "inventor_id": 1,
+                        "invention": 1894,
+                        "description": "vznášacie balóny kombinované so vzdušnou turbínou"
+                    }, ...
+                ]
+            }
+        </pre>
+        <label for="b_inventor_id">Id (vynálezca):</label>
+        <input type="number" id="b_inventor_id"><br><br>
+        <button id="b_btn">GET</button>
+        <pre id="b_response"></pre>
+    </div>
+    <div id="c">
+        <hr>
+        <h4>c. na základe zadaného priezviska získať json s detailnými informáciami o danom vynálezcovi</h4>
+        <pre>
+            <b>Tvar URL:</b>
+            https://site131.webte.fei.stuba.sk/zadanie_5/inventors/index.php?surname=Jobs
+            <b>Tvar Response Body:</b>
+            [
+                {
+                    "id": 10,
+                    "name": "Steve",
+                    "surname": "Jobs",
+                    "birth": 1955,
+                    "birthplace": "Kalifornia (USA)",
+                    "death": 2011,
+                    "deathplace": "Kalifornia (USA)",
+                    "description": "Steven Paul Jobs bol spoluzakladateľ Apple Inc. a jedna z vedúcich osobností počítačového priemyslu."
+                }
+            ]
+        </pre>
+        <label for="c_inventor_surname">Meno (vynálezca):</label>
+        <input type="text" id="c_inventor_surname"><br><br>
+        <button id="c_btn">GET</button>
+        <pre id="c_response"></pre>
+    </div>
+    <div id="d">
+        <hr>
+        <h4>d. na základe uvedeného storočia získať informáciu, ktorý vynález vtedy a kedy vznikol</h4>
+        <pre>
+            <b>Tvar URL:</b>
+            https://site131.webte.fei.stuba.sk/zadanie_5/inventions/index.php?century=20
+            <b>Tvar Response Body:</b>
+            [
+                {
+                    "id": 4,
+                    "inventor_id": 2,
+                    "invention": 1928,
+                    "description": "tepelné čerpadlo dodnes pracujúce vo Švajčiarsku, vykuruje radnicu v Ženeve s odoberaním tepla z vody jazera (ide o uzavretý okruh)"
+                },
+                {
+                    "id": 5,
+                    "inventor_id": 2,
+                    "invention": 1915,
+                    "description": "vynálezca pohyblivej umelej ruky (protéza)"
+                },
+                {
+                    "id": 15,
+                    "inventor_id": 2,
+                    "invention": 1935,
+                    "description": "hodinky s vodotriskom"
+                }
+            ]
+        </pre>
+        <label for="d_century">Storočie (vynález):</label>
+        <input type="number" id="d_century"><br><br>
+        <button id="d_btn">GET</button>
+        <pre id="d_response"></pre>
+    </div>
+    <div id="e">
+        <hr>
+        <h4>e. na základe uvedeného roku získať informáciu, čo sa v danom roku udialo – kto sa narodil, umrel, aký vynález vznikol</h4>
+        <pre>
+            <b>Tvar URL:</b>
+            https://site131.webte.fei.stuba.sk/zadanie_5/event/index.php?year=1915
+            <b>Tvar Response Body:</b>
+            {
+                "inventions": [
+                    {
+                        "id": 5,
+                        "inventor_id": 2,
+                        "invention": 1915,
+                        "description": "vynálezca pohyblivej umelej ruky (protéza)"
+                    }
+                ],
+                "inventors": [
+                    {
+                        "id": 1,
+                        "name": "Ján",
+                        "surname": "Bahýľ",
+                        "birth": 1856,
+                        "birthplace": "Zvolenská Slatina",
+                        "death": 1915,
+                        "deathplace": "Bratislava",
+                        "description": "vynálezca vrtuľníka"
+                    }
+                ]
+            }
+        </pre>
+        <label for="e_year">Rok (udalosť):</label>
+        <input type="number" id="e_year"><br><br>
+        <button id="e_btn">GET</button>
+        <pre id="e_response"></pre>
+    </div>
+</section>
+</body>
+<section class="sectionContent">
+    <h2>POST (CREATE):</h2>
+    <div id="f">
+        <hr>
+        <h4>
+            f. vložiť nového vynálezcu minimálne s jedným vynálezcom - nie všetky položky musia byť vyplnené
+            (REST API spĺňa aj null zadávanie aj možnosť vytvoriť viac ako jeden vynález,
+            pre jednoduchosť UI sme vytvorili túto možnosť.)
+        </h4>
+
+        <pre>
+            <b>Tvar URL:</b>
+            https://site131.webte.fei.stuba.sk/zadanie_5/inventors/index.php
+            <b>Tvar Request Body:</b>
+            {
+                "name": "Steve",
+                "surname": "Jobs",
+                "birth": 1955,
+                "birthplace": "Kalifornia (USA)",
+                "death":null,
+                "deathplace": null,
+                "description": "Steven Paul Jobs bol spoluzakladateľ Apple Inc. a jedna z vedúcich osobností počítačového priemyslu.",
+                "inventions": [
+                    {
+                        "invention": 2007,
+                        "description": "iPhone"
+                    }, ...
+                ]
+            }
+            <b>Tvar Response Body:</b>
+            {
+                "id": "43",
+                "name": "Steve",
+                "surname": "Jobs",
+                "birth": 1955,
+                "birthplace": "Kalifornia (USA)",
+                "death": null,
+                "deathplace": null,
+                "description": "Steven Paul Jobs bol spoluzakladateľ Apple Inc. a jedna z vedúcich osobností počítačového priemyslu.",
+                "inventions": [
+                    {
+                        "id": "45",
+                        "inventor_id": "43",
+                        "invention": 2007,
+                        "description": "iPhone"
+                    }
+                ]
+            }
+        </pre>
+
+        <h4>Vynálezca:</h4>
+        <label for="f_name">Meno:</label>
+        <input type="text" id="f_name">
+        <label for="f_surname">Priezvisko:</label>
+        <input type="text" id="f_surname"><br>
+        <label for="f_birth">Rok narodenia:</label>
+        <input type="number" id="f_birth">
+        <label for="f_birthplace">Miesto narodenia:</label>
+        <input type="text" id="f_birthplace"><br>
+        <label for="f_death">Rok úmrtia:</label>
+        <input type="number" id="f_death">
+        <label for="f_deathplace">Miesto úmrtia:</label>
+        <input type="text" id="f_deathplace"><br>
+        <label for="f_inventor_description">Popis:</label>
+        <input type="text" id="f_inventor_description">
+
+        <h4>Vynález:</h4>
+        <label for="f_invention">Rok vynájdenia:</label>
+        <input type="number" id="f_invention">
+        <label for="f_invention_description">Popis:</label>
+        <input type="text" id="f_invention_description"><br><br>
+
+
+        <button id="f_btn">POST</button>
+        <pre id="f_response"></pre>
+    </div>
+    <div id="g">
+        <hr>
+        <h4>g. vložiť nový vynález k už existujúcemu vynálezcovi</h4>
+        <pre>
+            <b>Tvar URL:</b>
+            https://site131.webte.fei.stuba.sk/zadanie_5/inventions/index.php?inventor_id=10
+            <b>Tvar Request Body:</b>
+            {
+                "invention": 2010,
+                "description": "iPad"
+            }
+            <b>Tvar Response Body:</b>
+            {
+                "id": "48",
+                "inventor_id": "10",
+                "invention": 2010,
+                "description": "iPad"
+            }
+        </pre>
+        <label for="g_inventor_id">Id (vynálezca):</label>
+        <input type="number" id="g_inventor_id">
+        <label for="g_invention">Rok vynájdenia:</label>
+        <input type="number" id="g_invention">
+        <label for="g_invention_description">Popis:</label>
+        <input type="text" id="g_invention_description"><br><br>
+        <button id="g_btn">POST</button>
+        <pre id="g_response"></pre>
+    </div>
+</section>
+<section class="sectionContent">
+    <h2>PUT (UPDATE):</h2>
+    <div id="h">
+        <hr>
+        <h4>h. modifikovať ľubovoľnú položku pri vynálezcovi (Treba zadať všetky atribúty, nie len tie, ktoré chcete updatnuť.)</h4>
+        <pre>
+            <b>Tvar URL:</b>
+            https://site131.webte.fei.stuba.sk/zadanie_5/inventors/index.php?id=10
+            <b>Tvar Request Body:</b>
+            {
+                "name": "Jeff",
+                "surname": "Bezos",
+                "birth": 1978,
+                "birthplace": "Chicago (USA)",
+                "death": null,
+                "deathplace": null,
+                "description": "Zakladateľ Amazon-u."
+            }
+            <b>Tvar Response Body:</b>
+             {
+                "id": 10
+                "name": "Jeff",
+                "surname": "Bezos",
+                "birth": 1978,
+                "birthplace": "Chicago (USA)",
+                "death": null,
+                "deathplace": null,
+                "description": "Zakladateľ Amazon-u."
+            }
+        </pre>
+        <label for="h_inventor_id">Id (vynálezca):</label>
+        <input type="number" id="h_inventor_id"><br>
+        <label for="h_name">Meno:</label>
+        <input type="text" id="h_name">
+        <label for="h_surname">Priezvisko:</label>
+        <input type="text" id="h_surname"><br>
+        <label for="h_birth">Rok narodenia:</label>
+        <input type="number" id="h_birth">
+        <label for="h_birthplace">Miesto narodenia:</label>
+        <input type="text" id="h_birthplace"><br>
+        <label for="h_death">Rok úmrtia:</label>
+        <input type="number" id="h_death">
+        <label for="h_deathplace">Miesto úmrtia:</label>
+        <input type="text" id="h_deathplace"><br>
+        <label for="h_inventor_description">Popis:</label>
+        <input type="text" id="h_inventor_description"><br><br>
+
+        <button id="h_btn">PUT</button>
+        <pre id="h_response"></pre>
+    </div>
+</section>
+<section class="sectionContent">
+    <h2>DELETE (DELETE):</h2>
+    <div id="i">
+        <hr>
+        <h4>i. vymazať vynálezcu spolu so všetkými údajmi, ktoré k nemu prináležia</h4>
+        <pre>
+            <b>Tvar URL:</b>
+            https://site131.webte.fei.stuba.sk/zadanie_5/inventors/index.php?id=10
+        </pre>
+        <label for="i_inventor_id">Id (vynálezca):</label>
+        <input type="number" id="i_inventor_id"><br><br>
+        <button id="i_btn">DELETE</button>
+        <pre id="i_response"></pre>
+    </div>
+</section>
+
+<script>
+    // a.
+    let aBtn = document.querySelector("#a_btn");
+    let aResponse = document.querySelector("#a_response");
+    aBtn.addEventListener("click", () => {
+        fetch("inventors/index.php", {method: "GET"})
+            .then(response => response.json())
+            .then(result => {
+                aResponse.textContent= JSON.stringify(result, undefined, 2);
+            });
+    });
+
+    // b.
+    let bBtn = document.querySelector("#b_btn");
+    let bInventorId = document.querySelector("#b_inventor_id");
+    let bResponse = document.querySelector("#b_response");
+    bBtn.addEventListener("click", () => {
+        fetch("inventors/index.php?id=" + bInventorId.value, {method: "GET"})
+            .then(response => response.json())
+            .then(result => {
+                bResponse.textContent= JSON.stringify(result, undefined, 2);
+            });
+    });
+
+    // c.
+    let cBtn = document.querySelector("#c_btn");
+    let cInventorSurname = document.querySelector("#c_inventor_surname");
+    let cResponse = document.querySelector("#c_response");
+    cBtn.addEventListener("click", () => {
+        fetch("inventors/index.php?surname=" + cInventorSurname.value, {method: "GET"})
+            .then(response => response.json())
+            .then(result => {
+                cResponse.textContent= JSON.stringify(result, undefined, 2);
+            });
+    });
+
+    // d.
+    let dBtn = document.querySelector("#d_btn");
+    let dCentury = document.querySelector("#d_century");
+    let dResponse = document.querySelector("#d_response");
+    dBtn.addEventListener("click", () => {
+        fetch("inventions/index.php?century=" + dCentury.value, {method: "GET"})
+            .then(response => response.json())
+            .then(result => {
+                dResponse.textContent= JSON.stringify(result, undefined, 2);
+            });
+    });
+
+    // e.
+    let eBtn = document.querySelector("#e_btn");
+    let eYear = document.querySelector("#e_year");
+    let eResponse = document.querySelector("#e_response");
+    eBtn.addEventListener("click", () => {
+        fetch("event/index.php?year=" + eYear.value, {method: "GET"})
+            .then(response => response.json())
+            .then(result => {
+                eResponse.textContent= JSON.stringify(result, undefined, 2);
+            });
+    });
+
+    // f.
+    let fBtn = document.querySelector("#f_btn");
+    let fResponse = document.querySelector("#f_response");
+    fBtn.addEventListener("click", () => {
+        let death;
+        let deathPlace;
+        if (document.querySelector("#f_death").value === "")
+            death = null;
+        else
+            death = document.querySelector("#f_death").value;
+        if (document.querySelector("#f_deathplace").value === "")
+            deathPlace = null;
+        else
+            deathPlace = document.querySelector("#f_deathplace").value;
+        let fRequestBody =
+            {
+                "name": document.querySelector("#f_name").value,
+                "surname": document.querySelector("#f_surname").value,
+                "birth": document.querySelector("#f_birth").value,
+                "birthplace": document.querySelector("#f_birthplace").value,
+                "death": death,
+                "deathplace": deathPlace,
+                "description": document.querySelector("#f_inventor_description").value,
+                "inventions": [
+                    {
+                        "invention": document.querySelector("#f_invention").value,
+                        "description": document.querySelector("#f_invention_description").value
+                    }
+                ]
+            };
+        fetch("inventors/index.php", {method: "POST", body: JSON.stringify(fRequestBody)})
+            .then(response => response.json())
+            .then(result => {
+                fResponse.textContent= JSON.stringify(result, undefined, 2);
+            });
+    });
+
+    // g.
+    let gBtn = document.querySelector("#g_btn");
+    let gResponse = document.querySelector("#g_response");
+    gBtn.addEventListener("click", () => {
+        let gRequestBody =
+            {
+                "invention": document.querySelector("#g_invention").value,
+                "description": document.querySelector("#g_invention_description").value
+            };
+        fetch("inventions/index.php?inventor_id=" + document.querySelector("#g_inventor_id").value, {method: "POST", body: JSON.stringify(gRequestBody)})
+            .then(response => response.json())
+            .then(result => {
+                gResponse.textContent= JSON.stringify(result, undefined, 2)});
+    });
+
+    // h.
+    let hBtn = document.querySelector("#h_btn");
+    let hResponse = document.querySelector("#h_response");
+    hBtn.addEventListener("click", () => {
+        let death;
+        let deathPlace;
+        if (document.querySelector("#h_death").value === "")
+            death = null;
+        else
+            death = document.querySelector("#h_death").value;
+        if (document.querySelector("#h_deathplace").value === "")
+            deathPlace = null;
+        else
+            deathPlace = document.querySelector("#h_deathplace").value;
+        let hRequestBody =
+            {
+                "name": document.querySelector("#h_name").value,
+                "surname": document.querySelector("#h_surname").value,
+                "birth": document.querySelector("#h_birth").value,
+                "birthplace": document.querySelector("#h_birthplace").value,
+                "death": death,
+                "deathplace": deathPlace,
+                "description": document.querySelector("#h_inventor_description").value,
+            };
+        fetch("inventors/index.php?id=" + document.querySelector("#h_inventor_id").value , {method: "PUT", body: JSON.stringify(hRequestBody)})
+            .then(response => response.json())
+            .then(result => {
+                hResponse.textContent= JSON.stringify(result, undefined, 2);
+            });
+    });
+
+    // i.
+    let iBtn = document.querySelector("#i_btn");
+    let iResponse = document.querySelector("#i_response");
+    iBtn.addEventListener("click", () => {
+        fetch("inventors/index.php?id=" + document.querySelector("#i_inventor_id").value, {method: "DELETE"})
+    });
+</script>
+
+</html>
